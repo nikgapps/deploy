@@ -24,6 +24,13 @@ jobs:
          uses: webfactory/ssh-agent@v0.4.1
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+       - name: Environment Details and clean up
+         run: |
+           neofetch
+           df
+           ls
+           rm -rf $REPOSITORY 10 11 Build Releases
+           ls
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
