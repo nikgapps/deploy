@@ -60,5 +60,5 @@ jobs:
        - name: Building Android R Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 11 core,basic,omni,stock,full,addons,addonsets
+            python3 main.py 11 core
             cd ..
