@@ -48,11 +48,11 @@ jobs:
 #          run: |
 #              git config --global http.postBuffer 157286400
 #              git clone --depth=1 https://gitlab.com/nikgapps/10.git
-       - name: Building Android Q Gapps
-         run: |
-            cd $REPOSITORY
-            python3 main.py 10 go,core,basic,omni,stock,full,addons,addonsets
-            cd ..
+#        - name: Building Android Q Gapps
+#          run: |
+#             cd $REPOSITORY
+#             python3 main.py 10 go,core,basic,omni,stock,full,addons,addonsets
+#             cd ..
        - name: Fetching Android R source
          run: |
               git config --global http.postBuffer 157286400
