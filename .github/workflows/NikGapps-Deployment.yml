@@ -28,14 +28,7 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
-           brew install tree
-           brew install neofetch
-           neofetch
-           df
-           tree -v --charset utf-8
-           rm -rf $REPOSITORY 10 11 Build Releases
-           df
-           tree -v --charset utf-8
+           rm -rf $REPOSITORY 10 11 Build Releases $SOURCE $WEBSITE $RELEASE
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
