@@ -44,10 +44,10 @@ jobs:
          run: |
            git clone --depth=1 $WEBSITE
            git clone --depth=1 $RELEASE
-       - name: Fetching Android Q source
-         run: |
-             git config --global http.postBuffer 157286400
-             git clone --depth=1 https://gitlab.com/nikgapps/10.git
+#        - name: Fetching Android Q source
+#          run: |
+#              git config --global http.postBuffer 157286400
+#              git clone --depth=1 https://gitlab.com/nikgapps/10.git
        - name: Building Android Q Gapps
          run: |
             cd $REPOSITORY
