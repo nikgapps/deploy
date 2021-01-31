@@ -11,8 +11,6 @@ env:
   USER_NAME: ${{ secrets.USER_NAME }}
   EMAIL: ${{ secrets.EMAIL }}
   SOURCE: ${{ secrets.SOURCE }}
-  WEBSITE: ${{ secrets.WEBSITE }}
-  RELEASE: ${{ secrets.RELEASE }}
 
 jobs:
   build:
@@ -28,7 +26,7 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
-           rm -rf $REPOSITORY 10 11 Build Releases $SOURCE $WEBSITE $RELEASE
+           rm -rf $REPOSITORY 10 11 Build Releases release nikgapps.github.io
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
@@ -42,8 +40,8 @@ jobs:
             cd ..
        - name: Get Website and Release Source
          run: |
-           git clone --depth=1 $WEBSITE
-           git clone --depth=1 $RELEASE
+           git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
+           git clone --depth=1 git@github.com:nikgapps/release.git
        - name: Fetching Android Q source
          run: |
              git config --global http.postBuffer 157286400
