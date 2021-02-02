@@ -49,7 +49,7 @@ jobs:
        - name: Building Android Q Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 10 go,core,basic,omni,stock,full
+            python3 main.py 10 go,core,basic,omni,stock,full,addons,addonsets
             cd ..
        - name: Fetching Android R source
          run: |
@@ -58,5 +58,5 @@ jobs:
        - name: Building Android R Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 11 core,basic,omni,stock,full
+            python3 main.py 11 core,basic,omni,stock,full,addons,addonsets
             cd ..
