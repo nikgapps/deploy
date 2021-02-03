@@ -41,7 +41,7 @@ jobs:
        - name: Get Website and Release Source
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
-           git clone --depth=1 git@github.com:nikgapps/release.git
+           git clone git@github.com:nikgapps/release.git
        - name: Fetching Android Q source
          run: |
              git config --global http.postBuffer 157286400
