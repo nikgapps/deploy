@@ -11,6 +11,7 @@ env:
   USER_NAME: ${{ secrets.USER_NAME }}
   EMAIL: ${{ secrets.EMAIL }}
   SOURCE: ${{ secrets.SOURCE }}
+  SF_PWD: ${{ secrets.SF_PWD }}
 
 jobs:
   build:
