@@ -33,6 +33,7 @@ jobs:
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone $SOURCE
+            git clone https://github.com/nikgapps/config.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
