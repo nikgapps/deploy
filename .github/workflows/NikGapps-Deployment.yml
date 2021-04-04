@@ -13,6 +13,8 @@ env:
   SOURCE: ${{ secrets.SOURCE }}
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
+  PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
+  PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
 
 jobs:
   build:
@@ -56,10 +58,10 @@ jobs:
        - name: Building Android Q Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 10 go,core,basic,omni,stock,full,addons,addonsets
+            python3 main.py 10 $PACKAGE_LIST_10
             cd ..
        - name: Building Android R Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 11 core,basic,omni,stock,full,addons,addonsets
+            python3 main.py 11 $PACKAGE_LIST_11
             cd ..
