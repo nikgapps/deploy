@@ -12,6 +12,7 @@ env:
   EMAIL: ${{ secrets.EMAIL }}
   SOURCE: ${{ secrets.SOURCE }}
   SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
 
 jobs:
   build:
