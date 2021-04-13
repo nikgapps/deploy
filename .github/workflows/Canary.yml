@@ -13,6 +13,7 @@ env:
   CANARY_SOURCE: ${{ secrets.CANARY_SOURCE }}
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
   PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
   PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
 
@@ -46,15 +47,15 @@ jobs:
        - name: Get Website and Release Source
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
-           git clone git@github.com:nikgapps/release.git
+           git clone git@github.com:nikgapps/canary-release.git
        - name: Fetching Android Q source
          run: |
              git config --global http.postBuffer 157286400
-             git clone --depth=1 https://gitlab.com/nikgapps/10.git
+             git clone --depth=1 --branch canary https://gitlab.com/nikgapps/10.git
        - name: Fetching Android R source
          run: |
               git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/11.git
+              git clone --depth=1 --branch canary https://gitlab.com/nikgapps/11.git
        - name: Building Android Q Gapps
          run: |
             cd $REPOSITORY
