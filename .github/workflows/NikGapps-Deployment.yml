@@ -12,8 +12,8 @@ env:
   EMAIL: ${{ secrets.EMAIL }}
   SOURCE: ${{ secrets.SOURCE }}
   SF_PWD: ${{ secrets.SF_PWD }}
-  RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
-  ENVIRONMENT_TYPE: 'stable'
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
   PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
   PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
 
