@@ -12,7 +12,7 @@ env:
   EMAIL: ${{ secrets.EMAIL }}
   CANARY_SOURCE: ${{ secrets.CANARY_SOURCE }}
   SF_PWD: ${{ secrets.SF_PWD }}
-  RELEASE_TYPE: ${{ secrets.RELEASE_TYPE }}
+  RELEASE_TYPE: 'canary'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
   PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
   PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
