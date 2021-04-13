@@ -31,7 +31,7 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
-           rm -rf $REPOSITORY 10 11 Build Releases release nikgapps.github.io
+           rm -rf $REPOSITORY 10 11 Build Releases canary-release release nikgapps.github.io TempPackages
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
