@@ -62,18 +62,18 @@ jobs:
            python3 git_control.py
            cd ..
            
-     - name: Fetching Android Q source
-         run: |
-             git config --global http.postBuffer 157286400
-             git clone --depth=1 https://gitlab.com/nikgapps/10.git
+      - name: Fetching Android Q source
+        run: |
+           git config --global http.postBuffer 157286400
+           git clone --depth=1 https://gitlab.com/nikgapps/10.git
              
-     - name: Fetching Android R source
-         run: |
-              git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/11.git
+      - name: Fetching Android R source
+        run: |
+           git config --global http.postBuffer 157286400
+           git clone --depth=1 https://gitlab.com/nikgapps/11.git
               
-     - name: Building Custom Builds
-         run: |
-            cd build
-            python3 config_control.py 10,11
-            cd ..
+      - name: Building Custom Builds
+        run: |
+           cd build
+           python3 config_control.py 10,11
+           cd ..
