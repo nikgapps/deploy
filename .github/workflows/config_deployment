@@ -20,7 +20,6 @@ env:
   DISPLAY_RESPONSE: ${{ secrets.DISPLAY_RESPONSE }}
   REPO: ${{ github.event.repository.name }}
   OWNER: ${{ github.event.repository.owner.login }}
-  REPOSITORY: ${{ secrets.REPOSITORY }}
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
