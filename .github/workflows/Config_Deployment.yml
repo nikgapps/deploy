@@ -81,3 +81,8 @@ jobs:
            cd build
            python3 config_control.py 11
            cd ..
+      - name: Updating download count
+        run: |
+           cd build
+           python3 analytics_control.py
+           cd ..
