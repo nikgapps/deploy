@@ -43,7 +43,7 @@ jobs:
             
       - name: Environment Details and clean up
         run: |
-          rm -rf Build 10 11 Releases canary-release release nikgapps.github.io TempPackages
+          rm -rf Build 10 11 12 Releases canary-release release nikgapps.github.io TempPackages
           echo "repo: $REPO"
           echo "repo owner: $OWNER"
           
@@ -81,6 +81,13 @@ jobs:
            cd build
            python3 config_control.py 11
            cd ..
+           
+      - name: Building Custom Builds for android 12
+        run: |
+           cd build
+           python3 config_control.py 12
+           cd ..
+           
       - name: Updating download count
         run: |
            cd build
