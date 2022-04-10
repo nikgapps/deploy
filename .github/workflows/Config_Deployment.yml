@@ -87,6 +87,12 @@ jobs:
            cd build
            python3 config_control.py 12
            cd ..
+      
+      - name: Building Custom Builds for android 12L
+        run: |
+           cd build
+           python3 config_control.py 12.1
+           cd ..
            
       - name: Updating download count
         run: |
