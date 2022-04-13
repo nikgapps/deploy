@@ -17,6 +17,7 @@ env:
   PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
   PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
   PACKAGE_LIST_12: ${{ secrets.PACKAGE_LIST_12 }}
+  PACKAGE_LIST_12_1: ${{ secrets.PACKAGE_LIST_12 }}
 
 jobs:
   build:
@@ -32,7 +33,7 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
-           rm -rf $REPOSITORY 10 11 Build Releases canary-release release nikgapps.github.io TempPackages
+           rm -rf $REPOSITORY 10 11 12 12.1 Build Releases canary-release release nikgapps.github.io TempPackages
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
@@ -49,24 +50,17 @@ jobs:
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
            git clone git@github.com:nikgapps/release.git
-       - name: Fetching Android Q source
-         run: |
-             git config --global http.postBuffer 157286400
-             git clone --depth=1 https://gitlab.com/nikgapps/10.git
-       - name: Building Android Q Gapps
-         run: |
-            cd $REPOSITORY
-            python3 main.py 10 $PACKAGE_LIST_10
-            cd ..
-       - name: Fetching Android R source
+           
+       - name: Fetching Android SL source
          run: |
               git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/11.git
-       - name: Building Android R Gapps
+              git clone --depth=1 https://gitlab.com/nikgapps/12.1.git
+       - name: Building Android SL Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 11 $PACKAGE_LIST_11
+            python3 main.py 12.1 $PACKAGE_LIST_12_1
             cd ..
+            
        - name: Fetching Android S source
          run: |
               git config --global http.postBuffer 157286400
@@ -76,3 +70,24 @@ jobs:
             cd $REPOSITORY
             python3 main.py 12 $PACKAGE_LIST_12
             cd ..
+            
+       - name: Fetching Android R source
+         run: |
+              git config --global http.postBuffer 157286400
+              git clone --depth=1 https://gitlab.com/nikgapps/11.git
+       - name: Building Android R Gapps
+         run: |
+            cd $REPOSITORY
+            python3 main.py 11 $PACKAGE_LIST_11
+            cd ..
+            
+       - name: Fetching Android Q source
+         run: |
+             git config --global http.postBuffer 157286400
+             git clone --depth=1 https://gitlab.com/nikgapps/10.git
+       - name: Building Android Q Gapps
+         run: |
+            cd $REPOSITORY
+            python3 main.py 10 $PACKAGE_LIST_10
+            cd ..
+            
