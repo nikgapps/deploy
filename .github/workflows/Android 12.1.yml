@@ -12,8 +12,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST_12_1: 'go,core,basic,omni,stock,full,addons,addonsets'
-  PACKAGE_LIST_12_1: 'go'
+  PACKAGE_LIST_12_1: 'go,core'
 
 jobs:
   build:
