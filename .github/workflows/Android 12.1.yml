@@ -55,6 +55,6 @@ jobs:
        - name: Building Android SL Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 12.1 $PACKAGE_LIST_12_1
+            python3 main.py -a 12.1 -p $PACKAGE_LIST_12_1
             cd ..
             
