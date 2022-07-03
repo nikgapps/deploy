@@ -12,7 +12,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST_12_1: 'go,core'
+  PACKAGE_LIST_12_1: 'core'
 
 jobs:
   build:
@@ -28,6 +28,7 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
+           ls -R
            rm -rf $REPOSITORY 10 11 12 12.1 Build Releases canary-release release nikgapps.github.io TempPackages
        - name: Initialization and Fetching the Source Code
          run: |
@@ -45,6 +46,7 @@ jobs:
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
            git clone git@github.com:nikgapps/release.git
+           git clone git@github.com:nikgapps/overlays_SL.git
            
        - name: Fetching Android SL source
          run: |
