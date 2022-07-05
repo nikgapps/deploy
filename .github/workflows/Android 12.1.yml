@@ -12,7 +12,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST_12_1: 'full'
+  PACKAGE_LIST_12_1: 'core,basic,omni,stock,full'
 
 jobs:
   build:
