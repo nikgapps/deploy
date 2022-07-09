@@ -39,7 +39,7 @@ jobs:
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone $SOURCE
-            git clone git@github.com:nikgapps/config.git
+            git clone git@github.com:nikgapps/overlays_SL.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
@@ -58,19 +58,9 @@ jobs:
        - name: Building Android SL Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 12.1 $PACKAGE_LIST_12_1
+            python3 main.py --a=12.1 --p=$PACKAGE_LIST_12_1
             cd ..
-            
-       - name: Fetching Android S source
-         run: |
-              git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/12.git
-       - name: Building Android S Gapps
-         run: |
-            cd $REPOSITORY
-            python3 main.py 12 $PACKAGE_LIST_12
-            cd ..
-            
+       
        - name: Fetching Android R source
          run: |
               git config --global http.postBuffer 157286400
@@ -78,16 +68,5 @@ jobs:
        - name: Building Android R Gapps
          run: |
             cd $REPOSITORY
-            python3 main.py 11 $PACKAGE_LIST_11
+            python3 main.py --a=11 --p=$PACKAGE_LIST_11
             cd ..
-            
-       - name: Fetching Android Q source
-         run: |
-             git config --global http.postBuffer 157286400
-             git clone --depth=1 https://gitlab.com/nikgapps/10.git
-       - name: Building Android Q Gapps
-         run: |
-            cd $REPOSITORY
-            python3 main.py 10 $PACKAGE_LIST_10
-            cd ..
-            
