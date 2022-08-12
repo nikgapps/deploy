@@ -2,8 +2,6 @@ name: NikGapps-Canary-Deployment
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *' 
 
 env:
   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
