@@ -39,7 +39,7 @@ jobs:
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone $SOURCE
-            git clone git@github.com:nikgapps/overlays_SL.git
+            git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
@@ -50,7 +50,6 @@ jobs:
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
            git clone git@github.com:nikgapps/release.git
-           git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
            
        - name: Fetching Android SL source
          run: |
