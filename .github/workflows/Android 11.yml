@@ -1,0 +1,59 @@
+name: NikGapps-11-Deployment
+
+on:
+  workflow_dispatch:
+
+env:
+  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  REPOSITORY: ${{ secrets.REPOSITORY }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  SOURCE: ${{ secrets.SOURCE }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+  PACKAGE_LIST_11: 'core,basic,omni,stock,full'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Setup SSH Keys and known_hosts 
+         uses: webfactory/ssh-agent@v0.4.1
+         with:
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+       - name: Environment Details and clean up
+         run: |
+           ls -R
+           rm -rf $REPOSITORY 10 11 12 12.1 Build Releases canary-release release nikgapps.github.io TempPackages
+       - name: Initialization and Fetching the Source Code
+         run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            git clone $SOURCE
+            git clone git@github.com:nikgapps/config.git
+       - name: Installing Requirements
+         run: |
+            python3 -m pip install wheel setuptools testresources
+            cd $REPOSITORY
+            pip3 install -r requirements.txt
+            cd ..
+       - name: Get Website and Release Source
+         run: |
+           git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
+           git clone git@github.com:nikgapps/release.git
+           
+       - name: Fetching Android R source
+         run: |
+              git config --global http.postBuffer 157286400
+              git clone --depth=1 https://gitlab.com/nikgapps/11.1.git
+       - name: Building Android R Gapps
+         run: |
+            cd $REPOSITORY
+            python3 main.py --a=11 --p=$PACKAGE_LIST_11 --d=False
+            cd ..
+            
