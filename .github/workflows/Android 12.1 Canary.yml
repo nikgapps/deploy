@@ -47,5 +47,5 @@ jobs:
        - name: Building Android SL Gapps
          run: |
             cd build
-            python3 run.py -A 12.1 -P $PACKAGE_LIST_12_1 -G
+            python3 run.py -A 12.1 -P $PACKAGE_LIST_12_1 -G -F
             cd ..
