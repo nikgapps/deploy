@@ -10,7 +10,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'canary'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST_12_1: core,basic,omni,full,go,addons,addonsets
+  PACKAGE_LIST_12_1: core
 
 jobs:
   build:
