@@ -1,4 +1,4 @@
-name: Android-12.1-Canary-Deployment
+name: Android-13-Canary-Deployment
 
 on:
   workflow_dispatch:
