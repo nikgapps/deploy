@@ -1,4 +1,4 @@
-name: NikGapps-12.1-Deployment
+name: Android-12.1-Deployment
 
 on:
   workflow_dispatch:
