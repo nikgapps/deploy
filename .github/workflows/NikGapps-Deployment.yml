@@ -14,10 +14,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST_10: ${{ secrets.PACKAGE_LIST_10 }}
-  PACKAGE_LIST_11: ${{ secrets.PACKAGE_LIST_11 }}
-  PACKAGE_LIST_12: ${{ secrets.PACKAGE_LIST_12 }}
-  PACKAGE_LIST_12_1: ${{ secrets.PACKAGE_LIST_12 }}
+  PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons
 
 jobs:
   build:
@@ -33,13 +30,14 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
        - name: Environment Details and clean up
          run: |
-           rm -rf $REPOSITORY 10 11 12 12.1 Build Releases canary-release release nikgapps.github.io TempPackages
+           rm -rf $REPOSITORY 10 11 12 12.1 13 Build Releases canary-release release nikgapps.github.io TempPackages
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone $SOURCE
             git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
+            git clone --depth=1 git@github.com:nikgapps/overlays_T.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
@@ -51,22 +49,32 @@ jobs:
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
            git clone git@github.com:nikgapps/release.git
            
-       - name: Fetching Android SL source
+       - name: Update Git configs
          run: |
-              git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/12.1.git
-       - name: Building Android SL Gapps
+           git config --global http.postBuffer 157286400
+
+       - name: Building Android 10 Gapps
          run: |
-            cd $REPOSITORY
-            python3 main.py --a=12.1 --p=$PACKAGE_LIST_12_1
+            cd build
+            python3 run.py -A 10 -P $PACKAGE_LIST -G -F
             cd ..
-       
-       - name: Fetching Android R source
+       - name: Building Android 11 Gapps
          run: |
-              git config --global http.postBuffer 157286400
-              git clone --depth=1 https://gitlab.com/nikgapps/11.git
-       - name: Building Android R Gapps
+            cd build
+            python3 run.py -A 11 -P $PACKAGE_LIST -G -F
+            cd ..
+       - name: Building Android 12 Gapps
          run: |
-            cd $REPOSITORY
-            python3 main.py --a=11 --p=$PACKAGE_LIST_11
+            cd build
+            python3 run.py -A 12 -P $PACKAGE_LIST -G -F
+            cd ..
+       - name: Building Android 12.1 Gapps
+         run: |
+            cd build
+            python3 run.py -A 12.1 -P $PACKAGE_LIST -G -F
+            cd ..
+       - name: Building Android 13 Gapps
+         run: |
+            cd build
+            python3 run.py -A 13 -P $PACKAGE_LIST -G -F
             cd ..

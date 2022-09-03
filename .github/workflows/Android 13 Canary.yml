@@ -10,7 +10,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'canary'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST: core,basic,omni,stock,full
+  PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone git@github.com:nikhilmenghani/build.git
-            git clone git@github.com:nikgapps/overlays_SL.git
+            git clone git@github.com:nikgapps/overlays_T.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
