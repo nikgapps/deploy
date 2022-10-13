@@ -1,0 +1,66 @@
+name: On-Demand-User-Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+        CONFIG_IN_BYTE:
+          description: "Enter the Config in byte"
+          required: true
+
+# Environment Variables
+env:
+  auth: ${{ secrets.auth }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  DISPLAY_RESPONSE: ${{ secrets.DISPLAY_RESPONSE }}
+  REPO: ${{ github.event.repository.name }}
+  OWNER: ${{ github.event.repository.owner.login }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+  CONFIG_IN_BYTE: ${{ github.event.inputs.CONFIG_IN_BYTE }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+    # if: github.event.repository.owner.login == 'nikgapps' 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup SSH Keys and known_hosts 
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            
+      - name: Environment Details and clean up
+        run: |
+          rm -rf Build build 10 11 12 13 Releases canary-release release nikgapps.github.io TempPackages overlays_SL overlays_T
+          echo "repo: $REPO"
+          echo "repo owner: $OWNER"
+          
+      - name: Initialization and Fetching the Source Code
+        run: |
+           git config --global user.name "$USER_NAME"
+           git config --global user.email "$EMAIL"
+           git config --global http.postBuffer 1048576000
+           git clone --depth=1 git@github.com:nikhilmenghani/build.git
+           git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
+           git clone --depth=1 git@github.com:nikgapps/overlays_T.git
+           
+      - name: Installing Requirements
+        run: |
+           python3 -m pip install wheel setuptools testresources
+           cd build
+           pip3 install -r requirements.txt
+           cd ..
+                       
+      - name: Building Custom Build
+        run: |
+           cd build
+           python3 config_ondemand.py -A 13 -C $CONFIG_IN_BYTE -N ondemand.config
+           cd ..
