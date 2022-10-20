@@ -72,36 +72,12 @@ jobs:
         run: |
            git clone --depth=1 git@github.com:nikgapps/config.git
                        
-      - name: Building Custom Builds for android 10
+      - name: Building Custom Builds
         run: |
            cd build
-           python3 config_control.py 10
+           python3 config_control.py -A 10,11,12,12.1,13
            cd ..
      
-      - name: Building Custom Builds for android 11
-        run: |
-           cd build
-           python3 config_control.py 11
-           cd ..
-           
-      - name: Building Custom Builds for android 12
-        run: |
-           cd build
-           python3 config_control.py 12
-           cd ..
-      
-      - name: Building Custom Builds for android 12L
-        run: |
-           cd build
-           python3 config_control.py 12.1
-           cd ..
-       
-      - name: Building Custom Builds for android 13
-        run: |
-           cd build
-           python3 config_control.py 13
-           cd ..
-           
       - name: Updating download count
         run: |
            cd build
