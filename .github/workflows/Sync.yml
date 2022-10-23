@@ -41,6 +41,7 @@ jobs:
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
+           ls -al ~/.ssh
 
        - name: Syncing Sources
          run: |
