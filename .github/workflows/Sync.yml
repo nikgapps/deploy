@@ -50,3 +50,8 @@ jobs:
             python3 pe_sync.py -A 13
             python3 nikgapps_sync.py -A 10,11,12,12.1,13
             cd ..
+       - name: Updating download count
+         run: |
+           cd build
+           python3 analytics_control.py
+           cd ..
