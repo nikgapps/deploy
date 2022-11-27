@@ -48,8 +48,8 @@ jobs:
             cd build
             python3 cleanup.py
             python3 pe_sync.py -A 13
-            python3 apk_mirror_sync -A 13
-            python3 evo_x_sync -A 13
+            python3 apk_mirror_sync.py -A 13
+            python3 evo_x_sync.py -A 13
             python3 nikgapps_sync.py -A 10,11,12,12.1,13
             cd ..
        - name: Updating download count
