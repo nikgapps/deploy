@@ -49,7 +49,7 @@ jobs:
          run: |
             cd build
             python3 cleanup.py
-            python3 update_control.py -A 13 -O cheetah
+            python3 update_control.py -A 13 -O cheetah,evox
             cd ..
        - name: Updating download count
          run: |
