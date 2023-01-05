@@ -1,0 +1,43 @@
+name: Test SSH
+
+on:
+  push:
+      branches: [main]
+  workflow_dispatch:
+
+env:
+  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Setup SSH Keys and known_hosts 
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+             ssh-private-key: |
+                            ${{ secrets.SSH_PRIVATE_KEY }}
+                            ${{ secrets.SSH_PRIVATE_KEY_GITLAB }}
+       - name: Environment Details and clean up
+         run: |
+            ls -R
+            rm -rf build
+       - name: Initialization and Fetching the Source Code
+         run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            git clone -b canary git@gitlab.com:nikgapps/13.git
+       - name: Environment Details and clean up again
+         run: |
+            ls -R
+            rm -rf build
+       
