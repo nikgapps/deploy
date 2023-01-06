@@ -35,7 +35,9 @@ jobs:
             git config --global user.name "Nikhil Menghani"
             git config --global user.email "nikhil@menghani.com"
             git clone git@github.com:nikgapps/my.git
-            git clone git@gitlab.com:nikgapps/13.git
+            git clone git@gitlab.com:nikgapps/test.git
+# git clone git@gitlab.com:nikgapps/13.git
+            
        - name: Environment Details and clean up again
          run: |
             ls -R
