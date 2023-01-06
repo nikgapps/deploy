@@ -26,11 +26,18 @@ jobs:
          with:
              ssh-private-key: |
                             ${{ secrets.SSH_PRIVATE_KEY }}
-                            ${{ secrets.SSH_PRIVATE_KEY_GITLAB }}
+         
+       - name: Setup SSH Keys and known_hosts using kielabokkie
+         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+         with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+           ssh-host: gitlab.com
+           
        - name: Environment Details and clean up
          run: |
             ls -R
             rm -rf build
+            cat /Users/runner/.ssh/known_hosts
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
