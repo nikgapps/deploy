@@ -52,26 +52,7 @@ jobs:
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
-       - name: Building Android 10 Gapps
-         run: |
-            cd build
-            python3 run.py -A 10 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 11 Gapps
-         run: |
-            cd build
-            python3 run.py -A 11 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 12 Gapps
-         run: |
-            cd build
-            python3 run.py -A 12 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 12.1 Gapps
-         run: |
-            cd build
-            python3 run.py -A 12.1 -P $PACKAGE_LIST -G -F
-            cd ..
+     
        - name: Building Android 13 Gapps
          run: |
             cd build
