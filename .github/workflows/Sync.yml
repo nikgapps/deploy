@@ -60,8 +60,3 @@ jobs:
             python3 cleanup.py
             python3 run_updater.py -A 13
             cd ..
-       - name: Updating download count
-         run: |
-           cd build
-           python3 analytics_control.py
-           cd ..
