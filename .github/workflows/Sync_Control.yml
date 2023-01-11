@@ -1,0 +1,62 @@
+name: Sync Operation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' 
+
+env:
+  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Setup SSH Keys and known_hosts 
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+             ssh-private-key: |
+                            ${{ secrets.SSH_PRIVATE_KEY }}
+         
+       - name: Setup SSH Keys and known_hosts using kielabokkie
+         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+         with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+           ssh-host: gitlab.com
+           
+       - name: Environment Details and clean up
+         run: |
+            ls -R
+            rm -rf build
+            cat /Users/runner/.ssh/known_hosts
+       - name: Initialization and Fetching the Source Code
+         run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            git clone -b dev git@github.com:nikgapps/build.git
+       - name: Installing Requirements
+         run: |
+            python3 -m pip install wheel setuptools testresources
+            cd build
+            pip3 install -r requirements.txt
+            cd ..
+       - name: Update Git configs
+         run: |
+           git config --global http.postBuffer 157286400
+           ls -al ~/.ssh
+
+       - name: Syncing Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -O cheetah,evox,pixelexperience
+            cd ..
