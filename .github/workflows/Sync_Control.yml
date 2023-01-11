@@ -1,4 +1,4 @@
-name: Sync Operation
+name: Sync OEM updates
 
 on:
   workflow_dispatch:
