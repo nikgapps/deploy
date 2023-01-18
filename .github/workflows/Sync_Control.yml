@@ -38,17 +38,20 @@ jobs:
             ls -R
             rm -rf build
             cat /Users/runner/.ssh/known_hosts
+            
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone -b dev git@github.com:nikgapps/build.git
+            
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
             cd build
             pip3 install -r requirements.txt
             cd ..
+            
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
