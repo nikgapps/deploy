@@ -67,27 +67,23 @@ jobs:
        - name: Syncing Cheetah Sources
          run: |
             cd build
-            python3 cleanup.py
             python3 sync_control.py -A 13 -O cheetah
             cd ..
 
        - name: Syncing PixelExperience Sources
          run: |
             cd build
-            python3 cleanup.py
             python3 sync_control.py -A 13 -O pixelexperience
             cd ..
 
        - name: Syncing EvoX Sources
          run: |
             cd build
-            python3 cleanup.py
             python3 sync_control.py -A 13 -O evox
             cd ..
 
        - name: Update Apps
          run: |
             cd build
-            python3 cleanup.py
             python3 run_updater.py -A 13
             cd ..
