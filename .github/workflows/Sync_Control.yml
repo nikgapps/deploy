@@ -68,7 +68,7 @@ jobs:
          run: |
             cd build
             python3 cleanup.py
-            python3 sync_control.py -A 13 -O cheetah,evox,pixelexperience,nikgapps
+            python3 sync_control.py -A 13 -O cheetah
             cd ..
 
        - name: Syncing PixelExperience Sources
