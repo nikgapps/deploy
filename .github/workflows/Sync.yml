@@ -38,23 +38,54 @@ jobs:
             ls -R
             rm -rf build
             cat /Users/runner/.ssh/known_hosts
+            
        - name: Initialization and Fetching the Source Code
          run: |
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
             git clone -b dev git@github.com:nikgapps/build.git
+            
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
             cd build
             pip3 install -r requirements.txt
             cd ..
+            
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
            ls -al ~/.ssh
 
-       - name: Syncing Sources
+       - name: Syncing NikGapps Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O nikgapps
+            cd ..
+            
+       - name: Syncing Cheetah Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O cheetah
+            cd ..
+
+       - name: Syncing PixelExperience Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O pixelexperience
+            cd ..
+
+       - name: Syncing EvoX Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O evox
+            cd ..
+
+       - name: Update Apps
          run: |
             cd build
             python3 cleanup.py
