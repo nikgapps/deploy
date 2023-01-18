@@ -54,9 +54,30 @@ jobs:
            git config --global http.postBuffer 157286400
            ls -al ~/.ssh
 
-       - name: Syncing Sources
+       - name: Syncing NikGapps Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O nikgapps
+            cd ..
+            
+       - name: Syncing Cheetah Sources
          run: |
             cd build
             python3 cleanup.py
             python3 sync_control.py -A 13 -O cheetah,evox,pixelexperience,nikgapps
+            cd ..
+
+       - name: Syncing PixelExperience Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O pixelexperience
+            cd ..
+
+       - name: Syncing EvoX Sources
+         run: |
+            cd build
+            python3 cleanup.py
+            python3 sync_control.py -A 13 -O evox
             cd ..
