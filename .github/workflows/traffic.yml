@@ -58,7 +58,6 @@ jobs:
            
       - name: Installing Requirements
         run: |
-           python3 -m pip install wheel setuptools testresources
            cd traffic
            pip3 install -r requirements.txt
            cd ..
