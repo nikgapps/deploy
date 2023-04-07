@@ -43,7 +43,13 @@ jobs:
         uses: webfactory/ssh-agent@v0.4.1
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-            
+      
+      - name: Setup SSH Keys and known_hosts using kielabokkie
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-host: frs.sourceforge.net
+           
       - name: Environment Details and clean up
         run: |
           rm -rf Build 10 11 12 Releases canary-release release nikgapps.github.io TempPackages
@@ -59,7 +65,7 @@ jobs:
            git config --global user.name "$USER_NAME"
            git config --global user.email "$EMAIL"
            git config --global http.postBuffer 1048576000
-           git clone --depth=1 -b main git@github.com:nikgapps/build.git
+           git clone --depth=1 -b dev git@github.com:nikgapps/build.git
            git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
            git clone --depth=1 git@github.com:nikgapps/overlays_T.git
            
