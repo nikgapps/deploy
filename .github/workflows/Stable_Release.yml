@@ -49,9 +49,13 @@ jobs:
        - name: Installing Requirements
          run: |
           python3 -m pip install wheel setuptools testresources
-          pip3 install -r ondemand/requirements.txt
-          pip3 install -r helper/requirements.txt
-          pip3 install -r build/requirements.txt
+          cd ondemand
+          pip3 install -r requirements.txt
+          cd ../helper
+          pip3 install -r requirements.txt
+          cd ../build
+          pip3 install -r requirements.txt
+          cd ..
 
        - name: Get Website and Release Source
          run: |
