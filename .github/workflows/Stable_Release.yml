@@ -40,28 +40,29 @@ jobs:
          run: |
           git config --global user.name "$USER_NAME"
           git config --global user.email "$EMAIL"
-          mkdir NikGapps
-          cd NikGapps
+          mkdir test
+          cd test
           git clone git@github.com:nikgapps/helper.git
+          ls -R
+          cd helper
+          pip3 install -r requirements.txt
+          cd ..
           git clone git@github.com:nikgapps/ondemand.git
+          ls -R
+          cd ondemand
+          pip3 install -r requirements.txt
+          cd ..
           git clone -b dev git@github.com:nikgapps/build.git
           ls -R
-
-       - name: Installing Requirements
-         run: |
-          python3 -m pip install wheel setuptools testresources
-          cd ondemand
-          ls -R
-          pip3 install -r requirements.txt
-          cd ..
-          cd helper
-          ls -R
-          pip3 install -r requirements.txt
-          cd ..
           cd build
           pip3 install -r requirements.txt
           cd ..
 
+
+       - name: Installing Requirements
+         run: |
+          python3 -m pip install wheel setuptools testresources
+          
        - name: Get Website and Release Source
          run: |
           git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
