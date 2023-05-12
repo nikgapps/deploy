@@ -43,6 +43,7 @@ jobs:
           mkdir NikGapps
           cd NikGapps
           git clone git@github.com:nikgapps/helper.git
+          git clone git@github.com:nikgapps/ondemand.git
           git clone -b dev git@github.com:nikgapps/build.git
 
        - name: Installing Requirements
