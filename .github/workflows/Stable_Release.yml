@@ -48,11 +48,9 @@ jobs:
        - name: Installing Requirements
          run: |
           python3 -m pip install wheel setuptools testresources
-          cd NikGapps
           pip3 install -r ondemand/requirements.txt
           pip3 install -r helper/requirements.txt
           pip3 install -r build/requirements.txt
-          cd ..
 
        - name: Get Website and Release Source
          run: |
