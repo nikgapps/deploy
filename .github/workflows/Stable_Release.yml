@@ -74,4 +74,5 @@ jobs:
 
        - name: Building Android 13 Gapps
          run: |
+          cd test
           python3 build/run.py -A 13 -P $PACKAGE_LIST -G -F
