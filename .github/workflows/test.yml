@@ -1,0 +1,60 @@
+name: Build NikGapps
+
+on:
+  workflow_dispatch:
+#   schedule:
+#     - cron: '0 0 * * *' 
+
+env:
+  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  REPOSITORY: ${{ secrets.REPOSITORY }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  SOURCE: ${{ secrets.SOURCE }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+  PACKAGE_LIST: core
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Setup SSH Keys and known_hosts 
+         uses: webfactory/ssh-agent@v0.4.1
+         with:
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+             
+       - name: Setup SSH Keys and known_hosts using kielabokkie
+         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+         with:
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+             ssh-host: frs.sourceforge.net
+            
+       - name: Initialization and Fetching the Source Code
+         run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            git clone git@github.com:nikhilmenghani/NikGappsProject.git
+            
+       - name: Installing Requirements
+         run: |
+            python3 -m pip install wheel setuptools testresources
+            python3 -m pip install NikGapps
+            cd NikGappsProject
+            cd ..
+            
+       - name: Update Git configs
+         run: |
+           git config --global http.postBuffer 157286400
+
+       - name: Building Android 13 Gapps
+         run: |
+            cd NikGappsProject
+            python3 main.py -A 13 -P $PACKAGE_LIST -S -F
+            cd ..
+       
