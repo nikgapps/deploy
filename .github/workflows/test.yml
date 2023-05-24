@@ -35,26 +35,21 @@ jobs:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              ssh-host: frs.sourceforge.net
             
-       - name: Initialization and Fetching the Source Code
-         run: |
-            git config --global user.name "$USER_NAME"
-            git config --global user.email "$EMAIL"
-            git clone git@github.com:nikhilmenghani/NikGappsProject.git
-            
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
             python3 -m pip install NikGapps
-            cd NikGappsProject
-            cd ..
+            mkdir NikGappsProject
             
        - name: Update Git configs
          run: |
-           git config --global http.postBuffer 157286400
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            git config --global http.postBuffer 157286400
 
        - name: Building Android 13 Gapps
          run: |
             cd NikGappsProject
-            python3 main.py -A 13 -P $PACKAGE_LIST -S -F
+            nikgapps --androidVersion 13 --packageList $PACKAGE_LIST --enableGitClone --upload
             cd ..
        
