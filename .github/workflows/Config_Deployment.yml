@@ -65,29 +65,20 @@ jobs:
            git config --global user.name "$USER_NAME"
            git config --global user.email "$EMAIL"
            git config --global http.postBuffer 1048576000
-           git clone --depth=1 git@github.com:nikgapps/build.git
-           git clone --depth=1 git@github.com:nikhilmenghani/OnDemand.git
-           git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
-           git clone --depth=1 git@github.com:nikgapps/overlays_T.git
+           git clone --depth=1 git@github.com:nikgapps/ondemand.git
            
       - name: Installing Requirements
         run: |
-           python3 -m pip install wheel setuptools testresources
-           cd build
-           pip3 install -r requirements.txt
-           cd ..
-           cd OnDemand
-           pip3 install -r requirements.txt
-           cd ..
+           python3 -m pip install wheel setuptools testresources nikgapps
 
       - name: Building Custom Builds
         run: |
-           cd OnDemand
+           cd ondemand
            python3 config_control.py -A 10,11,12,12.1,13
            cd ..
      
       - name: Updating download count
         run: |
-           cd build
+           cd ondemand
            python3 analytics_control.py
            cd ..
