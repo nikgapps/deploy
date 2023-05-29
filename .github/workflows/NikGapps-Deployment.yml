@@ -60,5 +60,5 @@ jobs:
        - name: Building Android 13 Gapps
          run: |
             cd NikGappsProject
-            nikgapps --androidVersion 13 --packageList $PACKAGE_LIST --enableGitClone --upload --updateWebsite
+            nikgapps --androidVersion 13 --packageList $PACKAGE_LIST --upload --updateWebsite
             cd ..
