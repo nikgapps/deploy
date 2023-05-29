@@ -42,15 +42,12 @@ jobs:
          run: |
             git config --global user.name "$USER_NAME"
             git config --global user.email "$EMAIL"
-            git clone $SOURCE
-            git clone --depth=1 git@github.com:nikgapps/overlays_SL.git
-            git clone --depth=1 git@github.com:nikgapps/overlays_T.git
        - name: Installing Requirements
          run: |
             python3 -m pip install wheel setuptools testresources
-            cd $REPOSITORY
-            pip3 install -r requirements.txt
-            cd ..
+            python3 -m pip install NikGapps
+            mkdir NikGappsProject
+            
        - name: Get Website and Release Source
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
@@ -59,29 +56,9 @@ jobs:
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
-
-       - name: Building Android 10 Gapps
-         run: |
-            cd build
-            python3 run.py -A 10 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 11 Gapps
-         run: |
-            cd build
-            python3 run.py -A 11 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 12 Gapps
-         run: |
-            cd build
-            python3 run.py -A 12 -P $PACKAGE_LIST -G -F
-            cd ..
-       - name: Building Android 12.1 Gapps
-         run: |
-            cd build
-            python3 run.py -A 12.1 -P $PACKAGE_LIST -G -F
-            cd ..
+       
        - name: Building Android 13 Gapps
          run: |
-            cd build
-            python3 run.py -A 13 -P $PACKAGE_LIST -G -F
+            cd NikGappsProject
+            nikgapps --androidVersion 13 --packageList $PACKAGE_LIST --enableGitClone --upload --updateWebsite
             cd ..
