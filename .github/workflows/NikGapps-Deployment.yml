@@ -47,18 +47,15 @@ jobs:
             python3 -m pip install wheel setuptools testresources
             python3 -m pip install NikGapps
             mkdir NikGappsProject
-            
        - name: Get Website and Release Source
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
            git clone git@github.com:nikgapps/release.git
-           
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
-       
        - name: Building Android 13 Gapps
          run: |
             cd NikGappsProject
-            nikgapps --androidVersion 10,11,12,12.1,13 --packageList $PACKAGE_LIST --upload --updateWebsite
+            nikgapps --sign --upload --release --androidVersion 10,11,12,12.1,13 --packageList $PACKAGE_LIST --updateWebsite 
             cd ..
