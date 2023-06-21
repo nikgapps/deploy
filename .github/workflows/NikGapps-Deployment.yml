@@ -54,8 +54,23 @@ jobs:
        - name: Update Git configs
          run: |
            git config --global http.postBuffer 157286400
+       - name: Building Android 10 Gapps
+         run: |
+            cd NikGappsProject
+            nikgapps --sign --upload --release --androidVersion 10 --packageList $PACKAGE_LIST --updateWebsite 
+            cd ..
+       - name: Building Android 11 Gapps
+         run: |
+            cd NikGappsProject
+            nikgapps --sign --upload --release --androidVersion 11 --packageList $PACKAGE_LIST --updateWebsite 
+            cd ..
+       - name: Building Android 12L Gapps
+         run: |
+            cd NikGappsProject
+            nikgapps --sign --upload --release --androidVersion 12.1 --packageList $PACKAGE_LIST --updateWebsite 
+            cd ..
        - name: Building Android 13 Gapps
          run: |
             cd NikGappsProject
-            nikgapps --sign --upload --release --androidVersion 10,11,12,12.1,13 --packageList $PACKAGE_LIST --updateWebsite 
+            nikgapps --sign --upload --release --androidVersion 13 --packageList $PACKAGE_LIST --updateWebsite 
             cd ..
