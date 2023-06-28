@@ -1,9 +1,7 @@
-name: Build NikGapps
+name: Test OEM Deployment
 
 on:
   workflow_dispatch:
-#   schedule:
-#     - cron: '0 0 * * *' 
 
 env:
   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -39,7 +37,10 @@ jobs:
          run: |
             python3 -m pip install wheel setuptools testresources
             python3 -m pip install NikGapps
-            mkdir NikGappsProject
+        
+       - name: Setup Git Repository
+         run: |
+            git clone git@github.com:nikgapps/updater.git
             
        - name: Update Git configs
          run: |
@@ -49,7 +50,7 @@ jobs:
 
        - name: Building Android 13 Gapps
          run: |
-            cd NikGappsProject
-            nikgapps --androidVersion 13 --packageList $PACKAGE_LIST --enableGitClone --upload
+            cd updater
+            python3 main.py
             cd ..
        
