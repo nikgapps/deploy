@@ -22,16 +22,22 @@ jobs:
        - name: Checkout
          uses: actions/checkout@main
 
-       - name: Setup SSH Keys and known_hosts 
+       - name: Setup SSH Keys and known_hosts for github
          uses: webfactory/ssh-agent@v0.4.1
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              
-       - name: Setup SSH Keys and known_hosts using kielabokkie
+       - name: Setup SSH Keys for frs.sourceforge.net
          uses: kielabokkie/ssh-key-and-known-hosts-action@v1
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              ssh-host: frs.sourceforge.net
+             
+       - name: Setup SSH Keys for gitlab.com
+         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+         with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+           ssh-host: gitlab.com
             
        - name: Installing Requirements
          run: |
