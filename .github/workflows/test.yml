@@ -27,17 +27,11 @@ jobs:
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              
-       - name: Setup SSH Keys for frs.sourceforge.net
-         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
-         with:
-             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-             ssh-host: frs.sourceforge.net
-             
        - name: Setup SSH Keys for gitlab.com
          uses: kielabokkie/ssh-key-and-known-hosts-action@v1
          with:
-           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-           ssh-host: gitlab.com
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+             ssh-host: gitlab.com
             
        - name: Installing Requirements
          run: |
