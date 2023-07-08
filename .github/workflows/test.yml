@@ -50,9 +50,10 @@ jobs:
             git config --global user.email "$EMAIL"
             git config --global http.postBuffer 157286400
 
-       - name: Syncing OEM updates
+       - name: Syncing OEM updates and extract overlays
          run: |
             cd updater
             python3 main.py
+            python3 overlays.py
             cd ..
        
