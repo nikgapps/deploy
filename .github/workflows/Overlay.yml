@@ -1,0 +1,66 @@
+name: Update Overlays
+
+on:
+  workflow_dispatch:
+#   schedule:
+#     - cron: '0 0 * * *' 
+
+env:
+  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  REPOSITORY: ${{ secrets.REPOSITORY }}
+  USER_NAME: ${{ secrets.USER_NAME }}
+  EMAIL: ${{ secrets.EMAIL }}
+  SOURCE: ${{ secrets.SOURCE }}
+  SF_PWD: ${{ secrets.SF_PWD }}
+  RELEASE_TYPE: 'stable'
+  ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
+  PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons,debloater
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: Setup SSH Keys and known_hosts 
+         uses: webfactory/ssh-agent@v0.4.1
+         with:
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+             
+       - name: Setup SSH Keys and known_hosts using kielabokkie
+         uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+         with:
+             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+             ssh-host: frs.sourceforge.net
+            
+       - name: Environment Details and clean up
+         run: |
+           rm -rf $REPOSITORY 10 11 12 12.1 13 Build Releases canary-release release nikgapps.github.io TempPackages
+           
+       - name: Initialization and Fetching the Source Code
+         run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+            
+       - name: Installing Requirements
+         run: |
+            python3 -m pip install wheel setuptools testresources
+            python3 -m pip install NikGapps
+            mkdir NikGappsProject
+       
+       - name: Update Git configs
+         run: |
+           git config --global http.postBuffer 157286400
+           
+       - name: Building Android 12L Overlay
+         run: |
+            cd NikGappsProject
+            nikgapps_overlay -A 12.1
+            cd ..
+       - name: Building Android 13 Overlay
+         run: |
+            cd NikGappsProject1
+            nikgapps_overlay -A 13
+            cd ..
