@@ -38,6 +38,7 @@ jobs:
        - name: Environment Details and clean up
          run: |
            rm -rf $REPOSITORY 10 11 12 12.1 13 Build Releases canary-release release nikgapps.github.io TempPackages
+           sudo apt-get install zipalign
            
        - name: Initialization and Fetching the Source Code
          run: |
