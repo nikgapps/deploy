@@ -67,12 +67,10 @@ jobs:
        - name: Building Android 12L Gapps
          run: |
             cd NikGappsProject
-            nikgapps_overlay -A 12.1
             nikgapps --sign --upload --release --androidVersion 12.1 --packageList $PACKAGE_LIST --updateWebsite 
             cd ..
        - name: Building Android 13 Gapps
          run: |
             cd NikGappsProject
-            nikgapps_overlay -A 13
             nikgapps --sign --upload --release --androidVersion 13 --packageList $PACKAGE_LIST --updateWebsite 
             cd ..
