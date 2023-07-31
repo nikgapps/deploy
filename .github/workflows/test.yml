@@ -69,7 +69,7 @@ jobs:
        
        - name: Running test
          run: |
-            cd project/NikGapps
+            cd project
             python3 test.py
             cd ..
        
