@@ -31,8 +31,8 @@ jobs:
 
       - name: Map Android Version to tree
         run: |
-          echo matrix.androidv
-          echo matrix.arch
+          echo ${{ matrix.androidv }}
+          echo ${{ matrix.arch }}
 
       - name: Clone repository
         run: |
