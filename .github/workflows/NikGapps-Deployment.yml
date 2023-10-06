@@ -28,7 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        android_version: ${{fromJson(env.MATRIX_VALUES)}}
+        android_version: ${{fromJson(github.event.inputs.android_versions)}}
 
     steps:
        - name: Checkout
