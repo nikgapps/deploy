@@ -2,6 +2,11 @@ name: NikGapps-Deployment
 
 on:
   workflow_dispatch:
+    inputs:
+      android_versions:
+        description: 'Comma-separated Android versions (e.g., 10,11,12.1,13)'
+        required: false
+        default: '10,11,12.1,13'
 #   schedule:
 #     - cron: '0 0 * * *' 
 
@@ -15,6 +20,7 @@ env:
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
   PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons,debloater
+  MATRIX_VALUES: ${{ github.event.inputs.android_versions }}
 
 jobs:
   build:
@@ -22,11 +28,7 @@ jobs:
 
     strategy:
       matrix:
-        android_version:
-          - '10'
-          - '11'
-          - '12.1'
-          - '13'
+        android_version: ${{fromJson(env.MATRIX_VALUES)}}
 
     steps:
        - name: Checkout
@@ -70,5 +72,13 @@ jobs:
        - name: Building Android ${{ matrix.android_version }} Gapps
          run: |
             cd NikGappsProject
-            nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST --updateWebsite 
+            IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
+            max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)  # Sorting versions and getting the maximum one.
+            if [ "${{ matrix.android_version }}" == "$max_version" ]; then
+                nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST --updateWebsite
+            else
+                nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
+            fi
             cd ..
+         env:
+            MATRIX_VALUES: ${{ env.MATRIX_VALUES }}
