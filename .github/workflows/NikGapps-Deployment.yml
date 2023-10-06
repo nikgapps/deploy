@@ -4,11 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       android_versions:
-        description: 'Comma-separated Android versions (e.g., 10,11,12.1,13)'
+        description: 'Comma-separated list of Android versions'
         required: false
-        default: '10,11,12.1,13'
-#   schedule:
-#     - cron: '0 0 * * *' 
 
 env:
   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -20,15 +17,28 @@ env:
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
   PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons,debloater
-  MATRIX_VALUES: ${{ github.event.inputs.android_versions }}
 
 jobs:
-  build:
-    runs-on: macos-latest
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Set matrix values
+        id: set-matrix
+        run: |
+          MATRIX_VALUES="${{ github.event.inputs.android_versions }}"
+          if [ -z "$MATRIX_VALUES" ]; then
+            MATRIX_VALUES="10,11,12.1,13"
+          fi
+          echo "::set-output name=matrix::[$MATRIX_VALUES]"
 
+  build:
+    needs: setup
+    runs-on: macos-latest
     strategy:
       matrix:
-        android_version: ${{fromJson(github.event.inputs.android_versions)}}
+        android_version: ${{fromJson(needs.setup.outputs.matrix)}}
 
     steps:
        - name: Checkout
