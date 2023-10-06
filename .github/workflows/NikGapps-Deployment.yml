@@ -86,9 +86,9 @@ jobs:
             IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
             max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)  # Sorting versions and getting the maximum one.
             if [ "${{ matrix.android_version }}" == "$max_version" ]; then
-                nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST --updateWebsite
+                nikgapps --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
             else
-                nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
+                nikgapps --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
             fi
             cd ..
          env:
