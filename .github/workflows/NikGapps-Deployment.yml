@@ -68,6 +68,8 @@ jobs:
 
        - name: Installing Requirements
          run: |
+            python3 -m pip install wheel setuptools testresources
+            python3 -m pip install NikGapps
             mkdir NikGappsProject
 
        - name: Get Website and Release Source
@@ -90,7 +92,9 @@ jobs:
            echo "Max version is $max_version"
            if [ "${{ matrix.android_version }}" == "$max_version" ]; then
                echo "Updating website in the end"
+               nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST --updateWebsite
            else
                echo "Not updating website in the end"
+               nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
            fi
            cd ..
