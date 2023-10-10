@@ -84,7 +84,7 @@ jobs:
        - name: Building Android ${{ matrix.android_version }} Gapps
          run: |
            cd NikGappsProject
-           MATRIX_VALUES=$(echo "$MATRIX_VALUES" | tr -d '[]')
+           MATRIX_VALUES=$(echo "$MATRIX_JSON" | tr -d '[]')
            IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
            max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)
            echo "Max version is $max_version"
