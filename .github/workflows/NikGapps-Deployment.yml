@@ -32,9 +32,7 @@ jobs:
           if [ -z "$MATRIX_VALUES" ]; then
             MATRIX_VALUES="10,11,12.1,13"
           fi
-          MATRIX_JSON="[$(echo "$MATRIX_VALUES" | sed "s/,/\",\"/g" | sed "s/^/\"/" | sed "s/$/\"/")]"
-          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
-          echo "matrix_values=$MATRIX_VALUES" >> $GITHUB_OUTPUT
+          echo "::set-output name=matrix::$MATRIX_VALUES"
 
   build:
     needs: setup
@@ -85,10 +83,8 @@ jobs:
        - name: Building Android ${{ matrix.android_version }} Gapps
          run: |
            cd NikGappsProject
-           echo "matrix_values=$matrix_values"
-           MATRIX_VALUES=${{fromJson(needs.setup.outputs.matrix)}}
-           echo "matrix_values=$MATRIX_VALUES"
-           MATRIX_VALUES=$(echo "$MATRIX_VALUES" | tr -d '[]')
+           MATRIX_VALUES="${{ needs.setup.outputs.matrix }}"
+           echo "MATRIX_VALUES=$MATRIX_VALUES"
            IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
            max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)
            echo "Max version is $max_version"
