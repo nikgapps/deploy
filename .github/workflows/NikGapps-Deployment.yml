@@ -32,7 +32,8 @@ jobs:
           if [ -z "$MATRIX_VALUES" ]; then
             MATRIX_VALUES="10,11,12.1,13"
           fi
-          echo "::set-output name=matrix::$MATRIX_VALUES"
+          MATRIX_JSON="[$(echo "$MATRIX_VALUES" | sed "s/,/\",\"/g" | sed "s/^/\"/" | sed "s/$/\"/")]"
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
 
   build:
     needs: setup
