@@ -84,9 +84,9 @@ jobs:
        - name: Building Android ${{ matrix.android_version }} Gapps
          run: |
            cd NikGappsProject
-           MATRIX_VALUES="${{ needs.setup.outputs.matrix }}"
+           MATRIX_VALUES=$(echo "$MATRIX_VALUES" | tr -d '[]')
            IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
-           max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)  # Sorting versions and getting the maximum one.
+           max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)
            echo "Max version is $max_version"
            if [ "${{ matrix.android_version }}" == "$max_version" ]; then
                echo "Updating website in the end"
