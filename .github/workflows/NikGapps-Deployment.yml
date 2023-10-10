@@ -32,7 +32,7 @@ jobs:
           if [ -z "$MATRIX_VALUES" ]; then
             MATRIX_VALUES="10,11,12.1,13"
           fi
-          echo "::set-output name=matrix::[$MATRIX_VALUES]"
+          echo "::set-output name=matrix::$MATRIX_VALUES"
 
   build:
     needs: setup
@@ -82,13 +82,14 @@ jobs:
        
        - name: Building Android ${{ matrix.android_version }} Gapps
          run: |
-            cd NikGappsProject
-            IFS=',' read -ra VERSIONS <<< "${{ needs.setup.outputs.matrix }}"  # Convert comma-separated string to array
-            max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)  # Sorting versions and getting the maximum one.
-            echo "Max version is $max_version"
-            if [ "${{ matrix.android_version }}" == "$max_version" ]; then
-                echo "Updating website in the end"
-            else
-                echo "Not updating website in the end"
-            fi
-            cd ..
+           cd NikGappsProject
+           MATRIX_VALUES="${{ needs.setup.outputs.matrix }}"
+           IFS=',' read -ra VERSIONS <<< "$MATRIX_VALUES"  # Convert comma-separated string to array
+           max_version=$(printf "%s\n" "${VERSIONS[@]}" | sort -V | tail -n1)  # Sorting versions and getting the maximum one.
+           echo "Max version is $max_version"
+           if [ "${{ matrix.android_version }}" == "$max_version" ]; then
+               echo "Updating website in the end"
+           else
+               echo "Not updating website in the end"
+           fi
+           cd ..
