@@ -67,8 +67,6 @@ jobs:
 
        - name: Installing Requirements
          run: |
-            python3 -m pip install wheel setuptools testresources
-            python3 -m pip install NikGapps
             mkdir NikGappsProject
 
        - name: Get Website and Release Source
