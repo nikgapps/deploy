@@ -65,3 +65,8 @@ jobs:
             cd NikGappsProject
             nikgapps_overlay -A 13
             cd ..
+       - name: Building Android 14 Overlay
+         run: |
+            cd NikGappsProject
+            nikgapps_overlay -A 14
+            cd ..
