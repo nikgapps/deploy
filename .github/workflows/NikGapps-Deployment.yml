@@ -30,13 +30,53 @@ jobs:
         run: |
           MATRIX_VALUES="${{ github.event.inputs.android_versions }}"
           if [ -z "$MATRIX_VALUES" ]; then
-            MATRIX_VALUES="10,11,12.1,13"
+            MATRIX_VALUES="10,11,12.1,13,14"
           fi
           MATRIX_JSON="[$(echo "$MATRIX_VALUES" | sed "s/,/\",\"/g" | sed "s/^/\"/" | sed "s/$/\"/")]"
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
-
-  build:
+          
+  update_overlays:
     needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        android_version: ${{fromJson(needs.setup.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup SSH Keys and known_hosts 
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            
+      - name: Setup SSH Keys and known_hosts using kielabokkie
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-host: frs.sourceforge.net
+          
+      - name: Initialization and Fetching the Source Code
+        run: |
+           git config --global user.name "$USER_NAME"
+           git config --global user.email "$EMAIL"
+           git config --global http.postBuffer 157286400
+           
+      - name: Installing Requirements
+        run: |
+           sudo apt-get install zipalign
+           python3 -m pip install wheel setuptools testresources
+           python3 -m pip install NikGapps
+           mkdir NikGappsProject
+          
+      - name: Building Android Overlay
+        run: |
+           cd NikGappsProject
+           nikgapps_overlay -A ${{ matrix.android_version }}
+           cd ..
+           
+  build:
+    needs: update_overlays
     runs-on: macos-latest
     strategy:
       matrix:
