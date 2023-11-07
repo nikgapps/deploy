@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup SSH Keys and known_hosts 
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: webfactory/ssh-agent@v0.8.0
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             
@@ -76,7 +76,7 @@ jobs:
            cd ..
            
   build:
-    needs: update_overlays
+    needs: [setup, update_overlays]
     runs-on: macos-latest
     strategy:
       matrix:
@@ -96,10 +96,6 @@ jobs:
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              ssh-host: frs.sourceforge.net
-            
-       - name: Environment Details and clean up
-         run: |
-           rm -rf $REPOSITORY 10 11 12 12.1 13 Build Releases canary-release release nikgapps.github.io TempPackages
 
        - name: Initialization and Fetching the Source Code
          run: |
