@@ -78,7 +78,7 @@ jobs:
         run: |
            cd ondemand
            python3 main.py -A 13,14 -U -e
-           python3 main.py -A 10,11,12,12.1,13 -U
+           python3 main.py -A 10,11,12,12.1,13,14 -U
            cd ..
      
       - name: Updating download count
