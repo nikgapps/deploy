@@ -1,4 +1,4 @@
-name: Updater
+name: Updater-Linux
 
 on:
   workflow_dispatch:
