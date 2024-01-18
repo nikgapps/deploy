@@ -56,9 +56,15 @@ jobs:
        #      python3 apkmirrorupdates.py
        #      cd ..
             
-       - name: Run Android Migration
+       # - name: Run Android Migration
+       #   run: |
+       #      cd updater
+       #      python3 bnav.py
+       #      cd ..
+            
+       - name: Update the oem apks
          run: |
             cd updater
-            python3 bnav.py
+            python3 main.py
             cd ..
             
