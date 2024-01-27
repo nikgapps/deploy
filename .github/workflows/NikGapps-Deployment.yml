@@ -6,7 +6,7 @@ on:
       android_versions:
         description: 'Comma-separated list of Android versions'
         required: false
-        default: '10,11,12.1,13'
+        default: '10,11,12.1,13,14'
 
 env:
   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -17,7 +17,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons,debloater
+  PACKAGE_LIST: debloater
 
 jobs:
   setup:
@@ -107,11 +107,6 @@ jobs:
             python3 -m pip install wheel setuptools testresources
             python3 -m pip install NikGapps
             mkdir NikGappsProject
-
-       - name: Find AAPT
-         run: |
-            AAPT_PATH=$(find $ANDROID_HOME/build-tools/ -name aapt | sort -V | tail -n1)
-            echo "AAPT_PATH=$AAPT_PATH"
           
        - name: Get Website and Release Source
          run: |
@@ -139,3 +134,38 @@ jobs:
                nikgapps --sign --upload --release --androidVersion ${{ matrix.android_version }} --packageList $PACKAGE_LIST
            fi
            cd ..
+
+  upload_config:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup SSH Keys and known_hosts 
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Setup SSH Keys and known_hosts using kielabokkie
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh-host: frs.sourceforge.net
+
+      - name: Initialization and Fetching the Source Code
+        run: |
+            git config --global user.name "$USER_NAME"
+            git config --global user.email "$EMAIL"
+
+      - name: Installing Requirements
+        run: |
+            python3 -m pip install wheel setuptools testresources
+            python3 -m pip install NikGapps
+            mkdir NikGappsProject
+      
+      - name: Uploading Config
+        run: |
+            cd NikGappsProject
+            nikgapps_config_upload --androidVersion ${{ github.event.inputs.android_versions }} --upload
+            cd ..
