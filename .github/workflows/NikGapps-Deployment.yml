@@ -108,6 +108,11 @@ jobs:
             python3 -m pip install NikGapps
             mkdir NikGappsProject
 
+       - name: Find AAPT
+         run: |
+            AAPT_PATH=$(find $ANDROID_HOME/build-tools/ -name aapt | sort -V | tail -n1)
+            echo "AAPT_PATH=$AAPT_PATH"
+          
        - name: Get Website and Release Source
          run: |
            git clone --depth=1 git@github.com:nikgapps/nikgapps.github.io.git
