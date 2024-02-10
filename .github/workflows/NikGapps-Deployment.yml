@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup SSH Keys and known_hosts 
-        uses: webfactory/ssh-agent@v0.8.0
+        uses: webfactory/ssh-agent@v0.9.0
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             
@@ -86,7 +86,7 @@ jobs:
          uses: actions/checkout@main
 
        - name: Setup SSH Keys and known_hosts 
-         uses: webfactory/ssh-agent@v0.8.0
+         uses: webfactory/ssh-agent@v0.9.0
          with:
              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
              
@@ -141,7 +141,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup SSH Keys and known_hosts 
-        uses: webfactory/ssh-agent@v0.8.0
+        uses: webfactory/ssh-agent@v0.9.0
         with:
             ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
