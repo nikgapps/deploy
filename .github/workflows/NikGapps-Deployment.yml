@@ -17,7 +17,7 @@ env:
   SF_PWD: ${{ secrets.SF_PWD }}
   RELEASE_TYPE: 'stable'
   ENVIRONMENT_TYPE: ${{ secrets.ENVIRONMENT_TYPE }}
-  PACKAGE_LIST: debloater
+  PACKAGE_LIST: core,basic,omni,stock,full,go,addonsets,addons,debloater
 
 jobs:
   setup:
